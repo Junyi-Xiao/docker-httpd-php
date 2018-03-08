@@ -19,12 +19,22 @@ RUN yum -y --setopt=tsflags=nodocs install epel-release && \
             cd redis && \
             phpize && \
             ./configure && \
-            make && \
-            make install \
+            make && make install \
+        ) \
+    ) && ( \
+        cd /tmp/phpext && \
+        curl -fsSL 'https://pecl.php.net/get/mongodb' -o mongodb.tgz && \
+        mkdir -p mongodb && \
+        tar -xf mongodb.tgz -C mongodb --strip-components=1 && ( \
+            cd mongodb && \
+            phpize && \
+            ./configure && \
+            make && make install \
         ) \
     ) && \
     rm -rf /tmp/phpext
 ADD php.d/redis.ini /etc/php.d/redis.ini
+ADD php.d/mongodb.ini /etc/php.d/mongodb.ini
 
 EXPOSE 80 443
 
