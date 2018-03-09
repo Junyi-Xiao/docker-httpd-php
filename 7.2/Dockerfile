@@ -11,7 +11,7 @@ RUN yum -y --setopt=tsflags=nodocs install epel-release && \
     yum -y --setopt=tsflags=nodocs install openssl openssl-devel mod_ssl && \
     yum -y --setopt=tsflags=nodocs --enablerepo=remi --enablerepo=remi-php${PHP_VERSION} install \
         php php-devel php-mbstring php-mcrypt php-mysqlnd php-pdo php-gd php-opcache php-xml && \
-    yum clean all && rm -rf /var/cache/yum && rm -rf /tmp/yum* && ( \
+    yum clean all && rm -rf /var/cache/yum && ( \
         mkdir -p /tmp/phpext && cd /tmp/phpext && \
         curl -fsSL 'https://pecl.php.net/get/redis' -o redis.tgz && \
         mkdir -p redis && \
@@ -32,13 +32,13 @@ RUN yum -y --setopt=tsflags=nodocs install epel-release && \
             make && make install \
         ) \
     ) && \
-    rm -rf /tmp/phpext
-ADD php.d/redis.ini /etc/php.d/redis.ini
-ADD php.d/mongodb.ini /etc/php.d/mongodb.ini
+    rm -rf /tmp/*
+
+COPY php.d/ /etc/php.d/
 
 EXPOSE 80 443
 
-ADD run-httpd.sh /run-httpd.sh
+COPY run-httpd.sh /run-httpd.sh
 RUN chmod -v +x /run-httpd.sh
 
 CMD ["/run-httpd.sh"]
