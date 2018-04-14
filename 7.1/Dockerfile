@@ -7,7 +7,7 @@ ENV PHP_VERSION="71"
 RUN yum -y --setopt=tsflags=nodocs install epel-release && \
     rpm -ivh http://rpms.famillecollet.com/enterprise/remi-release-7.rpm && \
     yum -y --setopt=tsflags=nodocs update && \
-    yum -y --setopt=tsflags=nodocs install httpd httpd-devel gcc make zip unzip && \
+    yum -y --setopt=tsflags=nodocs install httpd httpd-devel gcc make zip unzip sendmail && \
     yum -y --setopt=tsflags=nodocs install openssl openssl-devel mod_ssl && \
     yum -y --setopt=tsflags=nodocs --enablerepo=remi --enablerepo=remi-php${PHP_VERSION} install \
         php php-devel php-mbstring php-mcrypt php-mysqlnd php-pdo php-gd php-opcache php-xml && \
