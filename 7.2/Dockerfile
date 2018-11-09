@@ -34,11 +34,20 @@ RUN yum -y --setopt=tsflags=nodocs install epel-release && \
             make && make install \
         ) \
     ) && ( \
+        cd /tmp/phpext && \
+        curl -fsSL 'https://pecl.php.net/get/swoole' -o swoole.tgz && \
+        mkdir -p swoole && \
+        tar -xf swoole.tgz -C swoole --strip-components=1 && ( \
+            cd swoole && \
+            phpize && \
+            ./configure --enable-sockets --enable-openssl --enable-mysqlnd && \
+            make && make install \
+        ) \
+    ) && ( \
         cd /tmp/ && \
         curl -sS https://getcomposer.org/installer | php && \
         chmod +x composer.phar && \
-        mv composer.phar /usr/local/bin/composer && \
-        composer config -g repo.packagist composer https://packagist.phpcomposer.com \
+        mv composer.phar /usr/local/bin/composer \
     ) && \
     rm -rf /tmp/*
 
