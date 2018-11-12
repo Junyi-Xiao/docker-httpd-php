@@ -34,14 +34,17 @@ RUN yum -y --setopt=tsflags=nodocs install epel-release && \
             make && make install \
         ) \
     ) && ( \
+        yum -y --setopt=tsflags=nodocs install centos-release-scl scl-utils-build && \
+        yum -y --setopt=tsflags=nodocs install devtoolset-7-gcc devtoolset-7-gcc-c++ && \
         cd /tmp/phpext && \
         curl -fsSL 'https://pecl.php.net/get/swoole' -o swoole.tgz && \
         mkdir -p swoole && \
         tar -xf swoole.tgz -C swoole --strip-components=1 && ( \
             cd swoole && \
             phpize && \
-            ./configure --enable-sockets --enable-openssl --enable-mysqlnd && \
-            make && make install \
+            scl enable devtoolset-7 "./configure --enable-sockets --enable-openssl --enable-mysqlnd" && \
+            scl enable devtoolset-7 make && \
+            scl enable devtoolset-7 "make install" \
         ) \
     ) && ( \
         cd /tmp/ && \
