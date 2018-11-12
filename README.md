@@ -2,7 +2,8 @@
 
  - 此镜像基础环境是CentOS 7，主要部署了httpd和PHP环境；
  - PHP的常用扩展已安装，包括：sqlite3、mysqlnd、pdo、gd、mbstring、opcache、xml、redis、mongodb等，其中redis、mongodb扩展是通过编译安装的；
- - mod_ssl也已安装，理论上可支持https。
+ - mod_ssl也已安装，支持https；
+ - 支持swoole，swoole扩展是通过编译安装的。
 
 # 使用方法
 
