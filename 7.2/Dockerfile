@@ -1,6 +1,6 @@
 FROM centos:7
 
-MAINTAINER XiaoJunyi <xiaojunyi@foxmail.com>
+LABEL maintainer="XiaoJunyi <xiaojunyi@foxmail.com>"
 
 ENV PHP_VERSION="72"
 
